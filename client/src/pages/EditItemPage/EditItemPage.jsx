@@ -1,12 +1,111 @@
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import "./EditItemPage.scss";
+import { useEffect, useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+// import * as Yup from "yup";
+import axios from "axios";
 
 export default function EditItemPage() {
+  const pieceId = useParams().id;
+  const navigate = useNavigate();
+
+  const [initialValues, setInitialValues] = useState({
+    title: "",
+    clay_type: "",
+    stage: "",
+    description: "",
+    glaze: "",
+  });
+
+  useEffect(() => {
+    getPiece();
+  }, []);
+
+  async function getPiece() {
+    try {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_LOCALHOST}/api/pieces/${pieceId}`
+      );
+      // console.log(response.data);
+      setInitialValues({
+        title: data.title,
+        clay_type: data.clay_type,
+        stage: data.stage,
+        description: data.description,
+        glaze: data.glaze,
+      });
+    } catch (error) {
+      console.error(`Could not fetch piece data, ${error}`);
+    }
+  }
+
+  async function handleSubmit(values) {
+    await axios.patch(
+      `${import.meta.env.VITE_LOCALHOST}/api/pieces/${pieceId}`,
+      values
+    );
+    console.log("Piece edited successfully");
+    // console.log(values);
+  }
+
+  const handleCancel = () => {
+    navigate(`/piece/${pieceId}`);
+  };
+
   return (
     <>
       <Header />
-      Edit Item Page.
+      <div>
+        <h2>Edit Piece</h2>
+        <Formik
+          enableReinitialize
+          initialValues={initialValues}
+          // validationSchema={Yup.object({
+          //   title: Yup.string().required("This field is required"),
+          //   clay_type: Yup.string().required("This field is required"),
+          //   stage: Yup.string().required("This field is required"),
+          //   description: Yup.string().required("This field is required"),
+          //   glaze: Yup.string().required("This field is required"),
+          // })}
+          onSubmit={handleSubmit}
+        >
+          <Form className="form">
+            <label htmlFor="title">Title</label>
+            <Field type="text" name="title" />
+            <label htmlFor="clay_type">Clay Type</label>
+            <Field type="text" name="clay_type" />
+            <div role="group" aria-labelledby="checkbox-group">
+              <p>Stages completed:</p>
+              <label>
+                <Field type="radio" name="stage" value="thrown" />
+                thrown
+              </label>
+              <label>
+                <Field type="radio" name="stage" value="trimmed" />
+                trimmed
+              </label>
+              <label>
+                <Field type="radio" name="stage" value="bisque" />
+                bisque
+              </label>
+              <label>
+                <Field type="radio" name="stage" value="glazed" />
+                glazed
+              </label>
+            </div>
+            <label htmlFor="description">Description:</label>
+            <Field name="description" as="textarea" />
+            <label htmlFor="glaze">Glaze description</label>
+            <Field name="glaze" as="textarea" />
+            <button type="button" onClick={handleCancel}>
+              Cancel
+            </button>
+            <button type="submit">Submit</button>
+          </Form>
+        </Formik>
+      </div>
       <Footer />
     </>
   );
