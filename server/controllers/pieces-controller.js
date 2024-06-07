@@ -81,7 +81,7 @@ async function addPieceEntry(req, res) {
   if (!isValid) {
     return res
       .status(400)
-      .send("Please make sure to fill in all fields in the request");
+      .json("Please make sure to fill in all fields in the request");
   }
 
   const newPiece = {
@@ -104,9 +104,9 @@ async function addPieceEntry(req, res) {
     await knex("pieces").insert(newPiece);
 
     const data = await knex("pieces").where({ title: newPiece.title });
-    res.status(201).send(data[0]);
+    res.status(201).json(data[0]);
   } catch (error) {
-    res.status(400).send(`Error inserting entry to database: ${error.message}`);
+    res.status(400).json(`Error inserting entry to database: ${error.message}`);
   }
 }
 
@@ -116,7 +116,7 @@ async function editPieceEntry(req, res) {
 
   const pieceExists = await pieceEntryExists(pieceId);
   if (!pieceExists) {
-    return res.status(404).send(`Piece Id ${pieceId} Not Found.`);
+    return res.status(404).json(`Piece Id ${pieceId} Not Found.`);
   }
 
   const allRequiredSet = requiredKeys.every((i) =>
@@ -129,7 +129,7 @@ async function editPieceEntry(req, res) {
   if (!requestValid) {
     return res
       .status(400)
-      .send({
+      .json({
         error: `Invalid request. All fields must be set ${requiredKeys}.`,
       });
   }
@@ -148,9 +148,9 @@ async function editPieceEntry(req, res) {
       )
       .from("pieces")
       .where("id", pieceId).first();
-      res.status(200).send(data);
+      res.status(200).json(data);
     } catch (error) {
-      res.status(400).send(`Error inserting entry to database: ${error.message}`);
+      res.status(400).json(`Error inserting entry to database: ${error.message}`);
     }
   }
 
@@ -183,14 +183,15 @@ async function editPieceEntry(req, res) {
     .from("pieces")
     .join("images", "pieces.id", "images.piece_id")
     .groupBy("pieces.id")
-    .where("id", pieceId).first();
+    .where("pieces.id", pieceId);
     if (!data) {
       return res.status(404);
     } else {
       return res.status(200).json(data[0]);
     }
   } catch (error) {
-    res.status(400).send(`Error inserting entry to database: ${error.message}`);
+    console.log(error)
+    return res.status(400).json(`Error inserting entry to database: ${error.message}`);
   }
  
 }
@@ -201,12 +202,12 @@ async function deletePieceEntry(req, res) {
   try {
     const data = await knex('pieces').where('id', pieceId).del();
     if (!data) {
-      res.sendStatus(404)
+      res.status(404)
     } else {
       res.status(200).json(`${data} entry deleted`)
     }
   } catch (error) {
-    res.status(400).send(`Error retrieving inventory: ${error}`)
+    res.status(400).json(`Error retrieving inventory: ${error}`)
   }
 }
 
