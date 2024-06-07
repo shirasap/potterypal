@@ -11,7 +11,7 @@ async function getEntries(req, res) {
         knex.raw("GROUP_CONCAT(images.img_name) as images")
       )
       .from("pieces")
-      .join("images", "pieces.id", "images.piece_id")
+      .leftJoin("images", "pieces.id", "images.piece_id")
       .groupBy("pieces.id")
       .where("user_id", 1);
     if (!data) {
@@ -45,7 +45,7 @@ async function getEntry(req, res) {
       if (!data) {
         return res.status(404);
       } else {
-        return res.status(200).json(data);
+        return res.status(200).json(data[0]);
       }
     }
     const data = await knex
@@ -90,6 +90,7 @@ async function addPieceEntry(req, res) {
     stage: body.stage,
     description: body.description,
     glaze: body.glaze,
+    user_id: body.user_id,
   };
 
   // const pieceImages = {

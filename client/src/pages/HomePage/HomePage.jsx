@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import "./HomePage.scss";
 import ItemCard from "../../components/ItemCard/ItemCard";
+import AddIcon from "@mui/icons-material/Add";
+import { Link } from "react-router-dom";
 
 export default function HomePage() {
   const [pieces, setPieces] = useState([]);
@@ -17,7 +19,7 @@ export default function HomePage() {
     } catch (error) {
       console.error(`ERROR: Could not fetch pieces data`, error);
     }
-  };
+  }
 
   useEffect(() => {
     getPieces();
@@ -25,6 +27,10 @@ export default function HomePage() {
   return (
     <>
       <Header />
+      <Link to="/piece/add">
+        <span>Add Piece</span>
+        <AddIcon />
+      </Link>
       <div className="pieces">
         {pieces.map((entry) => (
           <ItemCard key={entry.id} entry={entry} />
