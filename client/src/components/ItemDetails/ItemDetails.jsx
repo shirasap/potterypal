@@ -59,6 +59,8 @@ export default function ItemDetails() {
           <EditIcon />
         </Link>
         <h1>{piece.title}</h1>
+        {/* make this a conditional thing.... */}
+        <img src={`${import.meta.env.VITE_LOCALHOST}/images/${piece.images}`} alt="piece image" />
         <p>{piece.clay_type}</p>
         <p>{piece.description}</p>
         <p>{piece.glaze}</p>

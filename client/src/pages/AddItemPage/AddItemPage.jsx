@@ -5,14 +5,29 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { useState } from "react";
 
 export default function AddItemPage() {
   const navigate = useNavigate();
 
-  async function handleSubmit(values) {
-    values.user_id = 1;
+  const [selectedFile, setSelectedFile] = useState({});
 
-    await axios.post(`${import.meta.env.VITE_LOCALHOST}/api/pieces/`, values);
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  async function handleSubmit(values) {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("clay_type", values.clay_type);
+    formData.append("stage", values.stage);
+    formData.append("description", values.description);
+    formData.append("glaze", values.glaze);
+    formData.append("user_id", 1);
+    formData.append("images", selectedFile);
+
+    await axios.post(`${import.meta.env.VITE_LOCALHOST}/api/pieces/`, formData);
+
     console.log("Piece added successfully");
     navigate("/");
   }
@@ -44,7 +59,7 @@ export default function AddItemPage() {
           })}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, setFieldValue }) => (
             <Form className="form">
               <label htmlFor="title">Title</label>
               <Field type="text" name="title" />
@@ -54,6 +69,34 @@ export default function AddItemPage() {
               {errors.clay_type && touched.clay_type ? (
                 <div>{errors.clay_type}</div>
               ) : null}
+
+              <div className="input-group">
+                {/* <label htmlFor="image-upload">
+                  {image.preview ? (
+                    <img
+                      src={image.preview}
+                      alt="dummy"
+                      width="300"
+                      height="300"
+                      className="my-10 mx-5"
+                    />
+                  ) : (
+                    <>
+                      <p>
+                        Upload Image
+                      </p>
+                    </>
+                  )}
+                </label> */}
+                <Field
+                  name="image"
+                  id="image"
+                  type="file"
+                  multiple
+                  onChange={(e) => handleFileChange(e)}
+                />
+              </div>
+
               <div role="group" aria-labelledby="checkbox-group">
                 <p>Stages completed:</p>
                 <label>
@@ -73,8 +116,8 @@ export default function AddItemPage() {
                   glazed
                 </label>
                 {errors.stage && touched.stage ? (
-                <div>{errors.stage}</div>
-              ) : null}
+                  <div>{errors.stage}</div>
+                ) : null}
               </div>
               <label htmlFor="description">Description:</label>
               <Field name="description" as="textarea" />

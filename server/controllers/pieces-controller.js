@@ -1,5 +1,18 @@
 const knex = require("knex")(require("../knexfile"));
 const requiredKeys = ["title", "clay_type", "stage", "description", "glaze"];
+const multer = require('multer');
+
+// Multer configuration
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads');
+  },
+  filename: function (req, file, cb) {
+    console.log(file)
+    cb(null, Date.now() +"-" +file.originalname);
+  },
+});
+const upload = multer({ storage });
 
 async function getEntries(req, res) {
   try {
@@ -83,7 +96,7 @@ async function addPieceEntry(req, res) {
       .status(400)
       .json("Please make sure to fill in all fields in the request");
   }
-
+  console.log(body)
   const newPiece = {
     title: body.title,
     clay_type: body.clay_type,
@@ -93,18 +106,24 @@ async function addPieceEntry(req, res) {
     user_id: body.user_id,
   };
 
-  // const pieceImages = {
-  //   images: body.images,
-  // };
-
   try {
-    // const insertedId = await knex("pieces").insert(newPiece).returning("id");
-    // console.log(insertedId);
+    console.log(newPiece)
 
-    await knex("pieces").insert(newPiece);
+    const insertedId = await knex("pieces").insert(newPiece).returning("id");
+    console.log(insertedId);
 
-    const data = await knex("pieces").where({ title: newPiece.title });
-    res.status(201).json(data[0]);
+    const pieceImages = {
+      img_name: req.file.filename,
+      piece_id: insertedId
+    };
+
+    await knex("images").insert(pieceImages)
+
+    // join images to the data return
+    // const data = await knex("pieces").where({ title: newPiece.title });
+    // res.status(201).json(data[0]);
+
+    res.status(201).json(body)
   } catch (error) {
     res.status(400).json(`Error inserting entry to database: ${error.message}`);
   }
