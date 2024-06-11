@@ -33,7 +33,7 @@ export default function HomePage() {
       </Link>
       <div className="pieces">
         {pieces.map((entry) => (
-          <ItemCard key={entry.id} entry={entry} />
+          <ItemCard key={entry.piece_id} entry={entry} />
         ))}
       </div>
       <Footer />
