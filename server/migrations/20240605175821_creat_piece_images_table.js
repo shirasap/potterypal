@@ -4,11 +4,11 @@
  */
 exports.up = function(knex) {
     return knex.schema.createTable('images', (table) => {
-        table.increments('id').primary();
+        table.increments('img_id').primary();
         table
           .integer('piece_id')
           .unsigned()
-          .references('pieces.id')
+          .references('pieces.piece_id')
           .onUpdate('CASCADE')
           .onDelete('CASCADE');
         table.string('img_name').notNullable();

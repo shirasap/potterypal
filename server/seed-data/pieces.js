@@ -1,6 +1,6 @@
 module.exports=[
     {
-        id:1,
+        piece_id:1,
         user_id: 1,
         title: "Leaf Mug",
         clay_type: "red",
@@ -10,7 +10,7 @@ module.exports=[
     
     },
     {
-        id:2,
+        piece_id:2,
         user_id: 1,
         title: "Coil pot",
         clay_type: "red",
@@ -20,7 +20,7 @@ module.exports=[
     
     },
     {
-        id:3,
+        piece_id:3,
         user_id: 1,
         title: "Slip Bowls",
         clay_type: "red",
@@ -28,7 +28,7 @@ module.exports=[
         description: "Wheel thrown bowls with white slip base and spiraled coloured slip on top."
     },
     {
-        id:4,
+        piece_id:4,
         user_id: 1,
         title: "Handbuilt Flower Bowl",
         clay_type: "red",
@@ -37,7 +37,7 @@ module.exports=[
         glaze: "Transparent glaze"
     },
     {
-        id:5,
+        piece_id:5,
         user_id: 1,
         title: "Spiral stain bowls",
         clay_type: "white",
