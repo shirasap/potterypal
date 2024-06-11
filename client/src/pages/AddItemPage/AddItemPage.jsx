@@ -28,7 +28,6 @@ export default function AddItemPage() {
 
     await axios.post(`${import.meta.env.VITE_LOCALHOST}/api/pieces/`, formData);
 
-    console.log("Piece added successfully");
     navigate("/");
   }
 
@@ -89,7 +88,7 @@ export default function AddItemPage() {
                   )}
                 </label> */}
                 <Field
-                  name="image"
+                  name="images"
                   id="image"
                   type="file"
                   multiple
