@@ -26,7 +26,6 @@ export default function ItemDetails() {
       const response = await axios.get(
         `${import.meta.env.VITE_LOCALHOST}/api/pieces/${pieceId}`
       );
-      console.log(response.data);
       setPiece(response.data);
     } catch (error) {
       console.error(`Could not fetch piece data, ${error}`);
@@ -47,23 +46,28 @@ export default function ItemDetails() {
   }, []);
 
   const handleDelete = () => {
-    console.log("Delete item");
-    deletePiece()
+    deletePiece();
   };
 
   return (
     <>
       <Header />
-      <div>
+      <div className="detail">
         <Link to={`/piece/edit/${pieceId}`}>
           <EditIcon />
         </Link>
-        <h1>{piece.title}</h1>
-        {/* make this a conditional thing.... */}
-        <img src={`${import.meta.env.VITE_LOCALHOST}/images/${piece.images}`} alt="piece image" />
-        <p>{piece.clay_type}</p>
-        <p>{piece.description}</p>
-        <p>{piece.glaze}</p>
+          <h1>{piece.title}</h1>
+          {piece.images ? (
+            <img
+              src={`${import.meta.env.VITE_LOCALHOST}/images/${piece.images}`}
+              alt="piece image"
+              className="detail__img"
+            />
+          ) : null}
+          <p>{piece.clay_type}</p>
+          <p>{piece.description}</p>
+          <p>{piece.glaze}</p>
+
         <div>
           <button onClick={handleOpen}>
             <DeleteIcon />

@@ -4,6 +4,10 @@
         border-radius: .25rem;
         padding: 1rem;
         width: 20rem;
-        height: 20rem;
+        height: auto;
+    }
+
+    &__img{
+        width: 100%;
     }
 }
