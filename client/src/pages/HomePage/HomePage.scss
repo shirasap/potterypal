@@ -1,5 +1,29 @@
-.pieces{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
+@use "../../styles/partials/variables";
+
+.dashboard {
+  margin: 1rem;
+}
+
+.pieces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.dash-head {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+
+  &__title {
+    margin: 0;
+  }
+
+  &__add {
+    background-color: variables.$light-lilac;
+    font-size: 1rem;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+  }
 }
