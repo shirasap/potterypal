@@ -1,13 +1,53 @@
+@use "../../styles/partials/variables";
+
 .piece{
+    width: 47%;
+
     &__card{
-        border: 1px solid black;
         border-radius: .25rem;
-        padding: 1rem;
-        width: 20rem;
+        width: 100%;
         height: auto;
+        background-color: variables.$primary-light;
+        box-shadow: 4px 4px 8px variables.$secondary-blue;
+
+    }
+
+    &__img-container{
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 30vw;
+        border-radius: 0.25rem 0.25rem 0 0 ;
     }
 
     &__img{
         width: 100%;
+    }
+
+    &__descriptino{
+        font-size: 1rem;
+    }
+
+    &__info{
+        padding: 0.5rem;
+    }
+    &__title{
+        font-size: 1rem;
+        margin: 0.5rem 0;
+    }
+
+    &__actions{
+        display: flex;
+        gap: 0.5rem;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    &__edit{
+        padding: 0.2rem;
+    }
+    &__delete{
+        padding: 0.2rem;
     }
 }
