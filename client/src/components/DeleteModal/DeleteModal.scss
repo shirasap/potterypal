@@ -1,0 +1,8 @@
+@use "../../styles/partials/variables";
+
+.delete{
+    &__button{
+        border: none;
+        background-color: variables.$bg-white;
+    }
+}
