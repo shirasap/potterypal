@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import "./DeleteModal.scss";
 import axios from "axios";
 
-export default function DeleteModal({ pieceId, piece, text }) {
+export default function DeleteModal({ pieceId, piece, text, passedClass }) {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -33,7 +33,7 @@ export default function DeleteModal({ pieceId, piece, text }) {
 
   return (
     <>
-      <button onClick={handleOpen} className="delete__button">
+      <button onClick={handleOpen} className={passedClass}> 
         <span className="delete__text">{text}</span><DeleteIcon fontSize="small" />
       </button>
       <Modal open={open} onClose={handleClose} className="modal">

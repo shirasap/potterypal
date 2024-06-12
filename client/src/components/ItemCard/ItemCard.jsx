@@ -31,7 +31,7 @@ export default function ItemCard({ entry }) {
             <Link to={`/piece/edit/${entry.piece_id}`} className="piece__edit">
               <EditIcon fontSize="small" />
             </Link>
-            <DeleteModal pieceId={entry.piece_id} piece={entry} className="piece__delete"/>
+            <DeleteModal pieceId={entry.piece_id} piece={entry} passedClass="piece__delete"/>
           </div>
         </div>
       </div>

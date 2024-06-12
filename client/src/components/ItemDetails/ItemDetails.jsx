@@ -40,13 +40,16 @@ export default function ItemDetails() {
             className="detail__img"
           />
         ) : null}
-        <p>{piece.clay_type}</p>
-        <p>{piece.description}</p>
-        <p>{piece.glaze}</p>
+        <p><span className="detail__title">Clay type: </span>{piece.clay_type}</p>
+        <p><span className="detail__title">Stage: </span>{piece.stage}</p>
+        <p><span className="detail__title">Description: </span>{piece.description}</p>
+        <p><span className="detail__title">Glaze description: </span>{piece.glaze}</p>
+        <div className="detail__actions">
         <Link to={`/piece/edit/${pieceId}`} className="detail__edit">
           Edit <EditIcon />
         </Link>
-        <DeleteModal pieceId={pieceId} piece={piece} text="Delete"/>
+        <DeleteModal pieceId={pieceId} piece={piece} text="Delete" passedClass="detail__delete"/>
+        </div>
       </div>
       <Footer />
     </>
