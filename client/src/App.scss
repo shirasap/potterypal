@@ -1,15 +1,25 @@
-* {
+@use "./styles/partials/variables";
+
+*{
     box-sizing: border-box;
 }
 body{
     margin: 0;
     padding: 0;
+    background-color: variables.$bg-white;
+    font-family: Roboto;
 }
 a{
     text-decoration: none;
+    color: variables.$primary-blue;
 }
 button {
     &:hover {
         cursor: pointer;
     }
+}
+
+p{
+    margin: 0;
+    line-height: 1.5;
 }
