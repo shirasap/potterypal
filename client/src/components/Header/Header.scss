@@ -1,7 +1,14 @@
+@use "../../styles/partials/variables";
+
 .header{
     display: flex;
-    border-bottom: 1px solid black;
-    margin-bottom:2rem ;
-    padding: 1rem;
+    padding: 0 1rem;
     justify-content: space-between;
+    align-items: center;
+    background-color: variables.$light-lilac;
+    font-family: Raleway, Verdana, Geneva, Tahoma, sans-serif;
+
+    &__title{
+        font-size: 1.5rem;
+    }
 }
