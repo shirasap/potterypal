@@ -10,5 +10,15 @@
 
     &__title{
         font-size: 1.5rem;
+        color: variables.$primary-light
     }
+
+    &__login{
+        color: variables.$primary-light;
+        background-color: transparent;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        border: none;
+    }
+
 }

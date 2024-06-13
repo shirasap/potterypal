@@ -6,6 +6,7 @@ import ItemDetails from "./components/ItemDetails/ItemDetails";
 import UserDash from "./pages/UserDash/UserDash";
 import NotFound from "./pages/NotFound/NotFound";
 import "./App.scss";
+import LoginPage from "./pages/LoginPage/LoginPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage/>}/>
           <Route path="/user/:id" element={<UserDash />} />
           <Route path="/piece/:id" element={<ItemDetails />} />
           <Route path="/piece/edit/:id" element={<EditItemPage />} />
