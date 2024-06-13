@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useState } from "react";
 
+
 export default function AddItemPage() {
   const navigate = useNavigate();
 
@@ -38,8 +39,9 @@ export default function AddItemPage() {
   return (
     <>
       <Header />
-      <div>
-        <h2>Add Piece</h2>
+      <div className="main-content">
+      <div className="add-page">
+        <h2 className="add-page__heading">Add Piece</h2>
         <Formik
           enableReinitialize
           initialValues={{
@@ -59,81 +61,129 @@ export default function AddItemPage() {
           onSubmit={handleSubmit}
         >
           {({ errors, touched, setFieldValue }) => (
-            <Form className="form">
-              <label htmlFor="title">Title</label>
-              <Field type="text" name="title" />
-              {errors.title && touched.title ? <div>{errors.title}</div> : null}
-              <label htmlFor="clay_type">Clay Type</label>
-              <Field type="text" name="clay_type" />
-              {errors.clay_type && touched.clay_type ? (
-                <div>{errors.clay_type}</div>
+            <Form className="add-form">
+              <label className="add-form__label" htmlFor="title">
+                Title
+              </label>
+              <Field
+                type="text"
+                name="title"
+                className="add-form__input"
+                placeholder="Title"
+              />
+              {errors.title && touched.title ? (
+                <div className="add-form__error">{errors.title}</div>
               ) : null}
-
-              <div className="input-group">
-                {/* <label htmlFor="image-upload">
-                  {image.preview ? (
-                    <img
-                      src={image.preview}
-                      alt="dummy"
-                      width="300"
-                      height="300"
-                      className="my-10 mx-5"
-                    />
-                  ) : (
-                    <>
-                      <p>
-                        Upload Image
-                      </p>
-                    </>
-                  )}
-                </label> */}
+              <label className="add-form__label" htmlFor="clay_type">
+                Clay Type
+              </label>
+              <Field
+                type="text"
+                name="clay_type"
+                className="add-form__input"
+                placeholder="Clay Type"
+              />
+              {errors.clay_type && touched.clay_type ? (
+                <div className="add-form__error">{errors.clay_type}</div>
+              ) : null}
+              <label htmlFor="images" className="add-form__custom-upload">
                 <Field
                   name="images"
                   id="image"
                   type="file"
                   multiple
                   onChange={(e) => handleFileChange(e)}
+                  className="add-form__upload"
                 />
-              </div>
-
-              <div role="group" aria-labelledby="checkbox-group">
-                <p>Stages completed:</p>
-                <label>
-                  <Field type="radio" name="stage" value="thrown" />
+              </label>
+              <div
+                role="group"
+                aria-labelledby="checkbox-group"
+                className="add-form__radio-group"
+              >
+                <p className="add-form__label">Select stage completed:</p>
+                <label className="add-form__label">
+                  <Field
+                    type="radio"
+                    name="stage"
+                    value="thrown"
+                    className="add-form__radio"
+                  />
                   thrown
                 </label>
-                <label>
-                  <Field type="radio" name="stage" value="trimmed" />
+                <label className="add-form__label">
+                  <Field
+                    type="radio"
+                    name="stage"
+                    value="trimmed"
+                    className="add-form__radio"
+                  />
                   trimmed
                 </label>
-                <label>
-                  <Field type="radio" name="stage" value="bisque" />
+                <label className="add-form__label">
+                  <Field
+                    type="radio"
+                    name="stage"
+                    value="bisque"
+                    className="add-form__radio"
+                  />
                   bisque
                 </label>
-                <label>
-                  <Field type="radio" name="stage" value="glazed" />
+                <label className="add-form__label">
+                  <Field
+                    type="radio"
+                    name="stage"
+                    value="glazed"
+                    className="add-form__radio"
+                  />
                   glazed
                 </label>
                 {errors.stage && touched.stage ? (
-                  <div>{errors.stage}</div>
+                  <div className="add-form__error">{errors.stage}</div>
                 ) : null}
               </div>
-              <label htmlFor="description">Description:</label>
-              <Field name="description" as="textarea" />
+              <label className="add-form__label" htmlFor="description">
+                Description:
+              </label>
+              <Field
+                name="description"
+                as="textarea"
+                className="add-form__textarea"
+                placeholder="Write any techniques or relevant details here."
+              />
               {errors.description && touched.description ? (
-                <div>{errors.description}</div>
+                <div className="add-form__error">{errors.description}</div>
               ) : null}
-              <label htmlFor="glaze">Glaze description</label>
-              <Field name="glaze" as="textarea" />
-              {errors.glaze && touched.glaze ? <div>{errors.glaze}</div> : null}
-              <button type="button" onClick={handleCancel}>
-                Cancel
-              </button>
-              <button type="submit">Add Piece</button>
+              <label className="add-form__label" htmlFor="glaze">
+                Glaze description
+              </label>
+              <Field
+                name="glaze"
+                as="textarea"
+                className="add-form__textarea"
+                placeholder="Write details about the glaze here."
+              />
+              {errors.glaze && touched.glaze ? (
+                <div className="add-form__error">{errors.glaze}</div>
+              ) : null}
+              <div className="add-form__actions">
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="add-form__cancel"
+                >
+                  Cancel
+                </button>
+                <button type="submit" className="add-form__add">
+                  Add Piece
+                </button>
+              </div>
             </Form>
           )}
         </Formik>
+      </div>        
       </div>
+
       <Footer />
     </>
   );

@@ -32,7 +32,7 @@ export default function ItemDetails() {
     <>
       <Header />
       <div className="detail">
-        <h1>{piece.title}</h1>
+        <h2 className="detail__heading">{piece.title}</h2>
         {piece.images ? (
           <img
             src={`${import.meta.env.VITE_LOCALHOST}/images/${piece.images}`}
@@ -46,7 +46,7 @@ export default function ItemDetails() {
         <p><span className="detail__title">Glaze description: </span>{piece.glaze}</p>
         <div className="detail__actions">
         <Link to={`/piece/edit/${pieceId}`} className="detail__edit">
-          Edit <EditIcon />
+          <span>Edit </span><EditIcon fontSize="medium" />
         </Link>
         <DeleteModal pieceId={pieceId} piece={piece} text="Delete" passedClass="detail__delete"/>
         </div>
