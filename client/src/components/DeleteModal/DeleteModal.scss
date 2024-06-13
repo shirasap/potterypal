@@ -3,5 +3,62 @@
 .delete{
     &__text{
         font-size: 1rem;
+        font-family: Lato, Verdana, Geneva, Tahoma, sans-serif;
+    }
+}
+
+.modal{
+
+    &__content{
+        background-color: variables.$primary-light;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__exit{
+        // position: absolute;
+        // top: 1rem;
+        // right: 1rem;
+        background-color: transparent;
+        border: none;
+        align-self: flex-end;
+        padding: 1rem;
+
+        :hover{
+            transform: scale(1.2);
+            transition: all 0.3s ease-in;
+        }
+    }
+
+    &__text{
+        padding: 3rem 1rem;
+    }
+
+    &__actions{
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 1rem;
+    }
+
+    &__delete-cancel{
+        width: 50%;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        border: none;
+        background-color: variables.$light-lilac;
+    }
+    
+    &__delete-confirm{
+        width: 50%;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        border: none;
+        background-color: variables.$light-lilac;
     }
 }

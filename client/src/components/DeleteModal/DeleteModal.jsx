@@ -34,23 +34,23 @@ export default function DeleteModal({ pieceId, piece, text, passedClass }) {
   return (
     <>
       <button onClick={handleOpen} className={passedClass}> 
-        <span className="delete__text">{text}</span><DeleteIcon fontSize="small" />
+        <span className="delete__text">{text}</span><DeleteIcon fontSize="medium" />
       </button>
       <Modal open={open} onClose={handleClose} className="modal">
         <Box className="modal__content">
-          <p>
+        <button className="modal__exit" onClick={handleClose}>
+              <CloseIcon />
+            </button>
+          <p className="modal__text">
             Are you sure you would like to delete "{piece.title}" from your
             pottery log?
           </p>
-          <div className="modal__functions">
+          <div className="modal__actions">
             <button className="modal__delete-cancel" onClick={handleClose}>
               Cancel
             </button>
             <button className="modal__delete-confirm" onClick={handleDelete}>
               Delete
-            </button>
-            <button className="modal__exit" onClick={handleClose}>
-              <CloseIcon />
             </button>
           </div>
         </Box>
