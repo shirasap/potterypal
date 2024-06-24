@@ -4,8 +4,6 @@ const knex = require("knex")(require("../knexfile"));
 const requiredKeys = ["title", "clay_type", "stage", "description", "glaze"];
 const multer = require("multer");
 
-getFilesInDirectory(path.join(__dirname, "../uploads"));
-
 // Multer configuration
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -142,7 +140,6 @@ async function editPieceEntry(req, res) {
       .from("images")
       .where("img_id", body.delimages);
     await knex("images").where("img_id", body.delimages).del();
-    console.log(delImage[0].img_name);
   }
 
   try {
@@ -182,7 +179,6 @@ async function editPieceEntry(req, res) {
       return res.status(200).json(data[0]);
     }
   } catch (error) {
-    console.log(error);
     return res
       .status(400)
       .json(`Error inserting entry to database: ${error.message}`);
@@ -221,18 +217,6 @@ const pieceImageExists = async (id) => {
   const existingItem = await knex("images").where("piece_id", id);
   return !!existingItem.length;
 };
-
-function getFilesInDirectory(directoryPath) {
-  try {
-    console.log(`\nFiles present in directory: ${directoryPath}`);
-    let files = fs.readdirSync(directoryPath);
-    files.forEach((file) => {
-      console.log(file);
-    });
-  } catch (error) {
-    console.error(`Error reading directory: ${error.message}`);
-  }
-}
 
 module.exports = {
   getEntries,
