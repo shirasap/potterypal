@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 const knex = require("knex")(require("../knexfile"));
 const requiredKeys = ["title", "clay_type", "stage", "description", "glaze"];
 const multer = require("multer");
+
+getFilesInDirectory(path.join(__dirname, "../uploads"));
 
 // Multer configuration
 const storage = multer.diskStorage({
@@ -125,7 +127,6 @@ async function editPieceEntry(req, res) {
     return res.status(404).json(`Piece Id ${pieceId} Not Found.`);
   }
 
- 
   if (req.file?.filename) {
     const pieceImages = {
       img_name: req.file.filename,
@@ -136,10 +137,12 @@ async function editPieceEntry(req, res) {
   }
 
   if (body.delimages) {
-    const delImage = await knex.select(
-      "img_name").from("images").where("img_id", body.delimages)
+    const delImage = await knex
+      .select("img_name")
+      .from("images")
+      .where("img_id", body.delimages);
     await knex("images").where("img_id", body.delimages).del();
-    console.log(delImage[0].img_name)
+    console.log(delImage[0].img_name);
   }
 
   try {
@@ -188,8 +191,16 @@ async function editPieceEntry(req, res) {
 
 async function deletePieceEntry(req, res) {
   const pieceId = req.params.id;
-
+  const deleteItem = await knex
+    .select("images.img_name")
+    .from("images")
+    .where("piece_id", pieceId);
+  const deleteImage = deleteItem[0].img_name;
+  deletePath = "./uploads/" + deleteImage;
   try {
+    fs.unlink(deletePath, (err) => {
+      if (err) console.log(err);
+    });
     const data = await knex("pieces").where("piece_id", pieceId).del();
     if (!data) {
       res.status(404);
@@ -210,6 +221,18 @@ const pieceImageExists = async (id) => {
   const existingItem = await knex("images").where("piece_id", id);
   return !!existingItem.length;
 };
+
+function getFilesInDirectory(directoryPath) {
+  try {
+    console.log(`\nFiles present in directory: ${directoryPath}`);
+    let files = fs.readdirSync(directoryPath);
+    files.forEach((file) => {
+      console.log(file);
+    });
+  } catch (error) {
+    console.error(`Error reading directory: ${error.message}`);
+  }
+}
 
 module.exports = {
   getEntries,
