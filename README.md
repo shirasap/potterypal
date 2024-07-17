@@ -3,7 +3,7 @@ Pottery Pal
 
 ## Overview
 
-Pottery Pal is a pottery project logging tool to help you remember your pieces as it moves through the different stages of pottery and the glazes you put on it.
+Pottery Pal is a pottery project logging tool that helps its users remember their pieces as it moves through the different stages of pottery and the glazes you put on it.
 
 ### Problem
 
